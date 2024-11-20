@@ -58,17 +58,29 @@ const vistaTablaPrestamos=(prestamos)=>{
 
 }
 
-const vistaEstadisticasPrestamos=(montoPrestamosDisponible,prestamosPorCantidadMeses, prestamosMinimos)=>{
-
+const vistaMontoFinalDisponible=(montoPrestamosDisponible)=>{
     return `
-        <ul>
-         <li> El monto final disponible es: ${montoPrestamosDisponible}</li>
-         <li> Clientes que pidieron por 2 meses: ${prestamosPorCantidadMeses.map(prestamo=>`${prestamo.cliente}, `)}</li>
-         <li> Clientes que pidieron el préstamo mínimo: ${prestamosMinimos.map(prestamo=>`${prestamo.cliente}, `)}</li>
-
+    <ul>
+     <li> El monto final disponible es: ${montoPrestamosDisponible}</li>
     </ul>
     `
 }
+const vistaPrestamosPorCantidadMeses=(prestamosPorCantidadMeses)=>{
+    return `
+    <ul>
+     <li>Clientes que pidieron por 2 meses: ${prestamosPorCantidadMeses.map(prestamo=>`${prestamo.cliente}, `)}</li>
+    </ul>
+    `
+}
+
+const vistaPrestamosMinimos=(prestamosMinimos)=>{
+    return `
+    <ul>
+     <li>Clientes que pidieron el préstamo mínimo: ${prestamosMinimos.map(prestamo=>`${prestamo.cliente}, `)}</li>
+    </ul>
+    `
+}
+
 
 const vistaAgregarPrestamo=(oficina)=>{
     let _cliente= prompt("Indica el nombre del cliente");
@@ -110,16 +122,22 @@ const vistaEliminarPrestamo=(oficina)=>{
             break;
 
             case 2:
-                $salida.innerHTML=`${vistaEstadisticasPrestamos(_oficina.montoDisponibleRestante(),_oficina.prestamosPorCantidadMeses(MESES_FILTRAR_PRESTAMOS),_oficina.prestamosMinimos())}`
-            break;
-
-            case 3:
                 $salida.innerHTML=vistaAgregarPrestamo(_oficina)
             break;
 
-            case 4:
+            case 3:
                 $salida.innerHTML=vistaEliminarPrestamo(_oficina)
             break;
+            case 4:
+                $salida.innerHTML=`${vistaMontoFinalDisponible(_oficina.montoDisponibleRestante())}`
+            break;
+            case 5:
+                $salida.innerHTML=`${vistaPrestamosPorCantidadMeses(_oficina.prestamosPorCantidadMeses(MESES_FILTRAR_PRESTAMOS))}`
+            break;
+            case 6:
+                $salida.innerHTML=`${vistaPrestamosMinimos(_oficina.prestamosMinimos())}`
+            break;
+
 
             default:
                 $salida.innerHTML=`${vistaTablaPrestamos(_oficina.prestamos)}`
